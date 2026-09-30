@@ -12,9 +12,9 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        # Inclui os arquivos de launch
+        #adicionar pastas aq conforme forem criadas
         (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', '*launch.[pxy][yma]*'))),
-        # Inclui os arquivos de descrição (xacro / urdf)
+        (os.path.join('share', package_name, 'config'), glob(os.path.join('config', '*.yaml'))),
         (os.path.join('share', package_name, 'description'), glob(os.path.join('description', '*.xacro'))),
     ],
     install_requires=['setuptools'],
