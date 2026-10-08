@@ -12,7 +12,7 @@ def generate_launch_description():
     pkg_simulation_robot = get_package_share_directory("simulation_robot")
 
     sim_time_arg = DeclareLaunchArgument(
-        "use_sim_time", default_value="true", description="Flag to enable use_sim_time"
+        "use_sim_time", default_value="True", description="Flag to enable use_sim_time"
     )
 
     map_arg = DeclareLaunchArgument(
