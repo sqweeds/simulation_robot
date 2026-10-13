@@ -2,9 +2,11 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, GroupAction, IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import SetRemap
+
 
 
 def generate_launch_description():
@@ -12,21 +14,21 @@ def generate_launch_description():
     xy_goal_tolerance_arg = DeclareLaunchArgument(
         "xy_goal_tolerance",
         default_value="0.15",
-        description="XY goal tolerance for the controller server",
+        description="XY goal tolerance for the controller server"
     )
 
     yaw_goal_tolerance_arg = DeclareLaunchArgument(
         "yaw_goal_tolerance",
         default_value="0.08",
-        description="Yaw goal tolerance for the controller server",
+        description="Yaw goal tolerance for the controller server"
     )
 
     sim_time_arg = DeclareLaunchArgument(
-        "use_sim_time", default_value="true", description="Flag to enable use_sim_time"
+        "use_sim_time", default_value="True", description="Flag to enable use_sim_time"
     )
 
     nav2_navigation_launch_path = os.path.join(
-        get_package_share_directory("nav2_bringup"), "launch", "navigation_launch.py"
+        get_package_share_directory("nav2_bringup"), "launch", "navigation_launch.py" #NAO TA SE CHAMANDO
     )
 
     navigation_params_path = os.path.join(
@@ -39,21 +41,20 @@ def generate_launch_description():
             "use_sim_time": LaunchConfiguration("use_sim_time"),
             "params_file": navigation_params_path,
             "autostart": "True",
-            "use_composition": "False",
-        }.items(),
+            "use_composition": "False"
+        }.items()
     )
+
+    navigation_group = GroupAction([
+        SetRemap(src="cmd_vel", dst="cmd_vel_raw"),
+        navigation_launch,
+    ])
 
     launchDescriptionObject = LaunchDescription()
 
-    # launchDescriptionObject.add_action(rviz_launch_arg)
-    # launchDescriptionObject.add_action(rviz_config_arg)
     launchDescriptionObject.add_action(yaw_goal_tolerance_arg)
     launchDescriptionObject.add_action(xy_goal_tolerance_arg)
     launchDescriptionObject.add_action(sim_time_arg)
-    # launchDescriptionObject.add_action(rviz_node)
-    launchDescriptionObject.add_action(navigation_launch)
-    # launchDescriptionObject.add_action(lifecycle_manager_node)                         #navigation&followme & inspeção
-
-    # launchDescriptionObject.add_action(navigation_ObjectDetection_launch)        # object
+    launchDescriptionObject.add_action(navigation_group)
 
     return launchDescriptionObject
