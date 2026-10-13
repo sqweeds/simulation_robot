@@ -46,7 +46,7 @@ def generate_launch_description():
     )
 
     navigation_group = GroupAction([
-        SetRemap(src="cmd_vel_smoothed", dst="cmd_vel_raw"),
+        SetRemap(src="cmd_vel", dst="cmd_vel_raw"),
         navigation_launch,
     ])
 
