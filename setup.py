@@ -17,6 +17,7 @@ setup(
         (os.path.join('share', package_name, 'config'), glob('config/*')),
         (os.path.join('share', package_name, 'maps'), glob('maps/*')),
         (os.path.join('share', package_name, 'description'), glob(os.path.join('description', '*.xacro'))),
+        (os.path.join('share', package_name, 'scripts'), glob(os.path.join('scripts', '*.py'))),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -31,6 +32,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'nav2pose = simulation_robot.scripts.nav2pose:main',
         ],
     },
 )
