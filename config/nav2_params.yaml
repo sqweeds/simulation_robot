@@ -3,9 +3,8 @@ collision_monitor:
     use_sim_time: True
     base_frame_id: "base_footprint"
     odom_frame_id: "odom"
-    cmd_vel_in_topic: "cmd_vel_smoothed"   #se der errado trocar pra raw
-    cmd_vel_out_topic: "cmd_vel_safe"   #se der errado tirar o safe
-    #collision_monitor_state_topic: "collision_monitor_state"        
+    cmd_vel_in_topic: "cmd_vel_smoothed" 
+    cmd_vel_out_topic: "cmd_vel_safe"     
     transform_tolerance: 0.5
     source_timeout: 1.0                 
     base_shift_correction: True
